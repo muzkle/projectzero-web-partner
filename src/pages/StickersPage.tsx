@@ -6,6 +6,7 @@ import { createSticker, deleteSticker, fetchStickers, updateSticker } from '@/sh
 import { getErrorMessage } from '@/shared/api/client';
 import type { Rarity, Sticker } from '@/shared/types';
 import { formatCurrency } from '@/shared/lib/utils';
+import { StickerFrame } from '@muzkle/ui';
 import { Alert } from '@/shared/ui/Alert';
 import { Badge } from '@/shared/ui/Badge';
 import { Button } from '@/shared/ui/Button';
@@ -106,17 +107,36 @@ export function StickersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <Link to="/albums" className="text-sm text-brand-600 hover:text-brand-700">
-          Back to albums
+        <Link to="/albums" className="text-sm text-accent-light hover:text-accent">
+          Voltar aos álbuns
         </Link>
-        <h1 className="mt-2 text-2xl font-bold text-slate-900">
-          Stickers — {albumQuery.data?.title ?? 'Album'}
+        <h1 className="mt-2 font-display text-2xl font-bold text-white">
+          Figurinhas — {albumQuery.data?.title ?? 'Álbum'}
         </h1>
-        <p className="mt-1 text-sm text-slate-500">Manage sticker inventory and pricing.</p>
+        <p className="mt-1 text-sm text-white/60">Gerencie figurinhas e preços. Imagens recomendadas: 600×800 (3:4).</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-        <Card>
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Preview</CardTitle>
+              <CardDescription>Visualização ao vivo com frame de raridade.</CardDescription>
+            </CardHeader>
+            <div className="mx-auto max-w-[200px]">
+              <StickerFrame
+                rarity={form.rarity}
+                imageUrl={form.imageUrl || undefined}
+                alt={form.name || 'Preview'}
+                size="md"
+              />
+              {form.name && (
+                <p className="mt-2 truncate text-center text-sm font-medium text-white">{form.name}</p>
+              )}
+            </div>
+          </Card>
+
+          <Card>
           <CardHeader>
             <CardTitle>{editing ? 'Edit sticker' : 'Add sticker'}</CardTitle>
             <CardDescription>
@@ -209,6 +229,7 @@ export function StickersPage() {
             </div>
           </form>
         </Card>
+        </div>
 
         <div className="space-y-4">
           {!stickersQuery.data?.length ? (

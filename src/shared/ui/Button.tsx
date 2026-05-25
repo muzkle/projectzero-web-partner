@@ -12,10 +12,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-600 text-white hover:bg-brand-700 focus-visible:ring-brand-500 disabled:bg-brand-300',
+    'bg-accent text-white hover:bg-accent-dark focus-visible:ring-accent disabled:bg-accent/40',
   secondary:
-    'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-slate-400',
-  ghost: 'text-slate-600 hover:bg-slate-100 focus-visible:ring-slate-400',
+    'border border-white/15 bg-surface-elevated text-white/90 hover:bg-white/5 focus-visible:ring-accent/40',
+  ghost: 'text-white/70 hover:bg-white/5 focus-visible:ring-accent/40',
   danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 disabled:bg-red-300',
 };
 

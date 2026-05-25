@@ -2,10 +2,13 @@
 
 Partner portal for ProjectZero — manage albums, stickers, missions, and sales.
 
+**Layout:** desktop-first shell via [`@muzkle/ui`](https://github.com/muzkle/projectzero-ui) — tema escuro unificado com web-user, preview de figurinha com frame por raridade.
+
 ## Stack
 
 - React 18 + Vite + TypeScript
-- Tailwind CSS
+- `@muzkle/ui@0.1.0` (GitHub Packages)
+- Tailwind CSS (tema escuro premium)
 - React Router v6
 - TanStack Query
 - Axios
@@ -13,10 +16,15 @@ Partner portal for ProjectZero — manage albums, stickers, missions, and sales.
 ## Development
 
 ```bash
+cp .npmrc.example .npmrc
+$env:NODE_AUTH_TOKEN = "ghp_xxxx"
+
 npm install
 cp .env.example .env
 npm run dev
 ```
+
+Sem PAT: `npm install file:../projectzero-ui/muzkle-ui-0.1.0.tgz`
 
 Runs at [http://localhost:5174](http://localhost:5174).
 
@@ -25,49 +33,35 @@ Runs at [http://localhost:5174](http://localhost:5174).
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `VITE_API_URL` | `http://localhost:3000/v1` | API Gateway base URL |
-
-## Auth
-
-- Access token stored in memory
-- Refresh token persisted in `localStorage`
-- Axios interceptor attaches `Authorization: Bearer …` and refreshes on 401
-- Partner API calls include `x-partner-id` (from `/partners/me`)
+| `NODE_AUTH_TOKEN` | — | PAT GitHub com `read:packages` |
 
 ## Pages
 
 | Route | Description |
 |-------|-------------|
-| `/login` | Sign in |
-| `/register` | Create account |
-| `/request-partner` | Submit partner application |
-| `/` | Dashboard with sales stats (`GET /partner/sales`) |
+| `/` | Dashboard |
 | `/albums` | Album list |
-| `/albums/new` | Create album |
-| `/albums/:id/edit` | Edit album |
-| `/albums/:albumId/stickers` | Sticker CRUD |
-| `/albums/:albumId/stickers/:stickerId/mission` | Mission form |
+| `/albums/:albumId/stickers` | Sticker CRUD + preview retrato |
+| `/settings` | Configurações da conta parceiro |
+| `/login`, `/register` | Auth |
 
-## API routes (via gateway)
+## Sticker images
 
-- `POST /auth/login`, `/auth/register`, `/auth/refresh`, `GET /auth/me`
-- `POST /partners/request`, `GET /partners/me`
-- `GET|POST /partner/albums`, `PATCH|DELETE /partner/albums/:id`, `POST /partner/albums/:id/publish`
-- `GET|POST /partner/albums/:albumId/stickers`, `PATCH|DELETE …/:id`
-- `GET|POST|PATCH|DELETE /partner/albums/:albumId/stickers/:stickerId/mission`
-- `GET /partner/sales`
+Recommended portrait size: **600×800** (3:4). See `@muzkle/ui` README.
 
 ## Production
 
 ```bash
 npm run build
-npm run preview
 ```
 
-### Docker / Railway
+Docker / Railway:
 
 ```bash
-docker build -t projectzero-web-partner .
-docker run -p 8080:80 projectzero-web-partner
+docker build --build-arg NODE_AUTH_TOKEN=$NODE_AUTH_TOKEN -t projectzero-web-partner .
+railway up projectzero-web-partner --path-as-root --service web-partner
 ```
 
-Set `VITE_API_URL` at build time for production API URL.
+Configure `NODE_AUTH_TOKEN` no serviço Railway (mesmo PAT usado nos backends).
+
+Ver [ADR-002](../docs/ADR/002-desktop-first-portrait-stickers.md).

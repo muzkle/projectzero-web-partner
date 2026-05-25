@@ -8,11 +8,15 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+    dedupe: ['react', 'react-dom', 'react-router-dom'],
   },
   server: {
     port: 5174,
   },
   preview: {
     port: 5174,
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@muzkle/ui'],
   },
 });

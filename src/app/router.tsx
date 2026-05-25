@@ -17,6 +17,9 @@ const RegisterPage = lazy(() =>
 const RequestPartnerPage = lazy(() =>
   import('@/pages/RequestPartnerPage').then((m) => ({ default: m.RequestPartnerPage })),
 );
+const SettingsPage = lazy(() =>
+  import('@/pages/SettingsPage').then((m) => ({ default: m.SettingsPage })),
+);
 const DashboardPage = lazy(() =>
   import('@/pages/DashboardPage').then((m) => ({ default: m.DashboardPage })),
 );
@@ -91,6 +94,14 @@ export const router = createBrowserRouter([
                 element: (
                   <LazyPage>
                     <AlbumFormPage />
+                  </LazyPage>
+                ),
+              },
+              {
+                path: '/settings',
+                element: (
+                  <LazyPage>
+                    <SettingsPage />
                   </LazyPage>
                 ),
               },

@@ -1,23 +1,36 @@
+@import '@muzkle/ui/src/styles.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html,
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+    @apply min-h-full w-full bg-surface text-white antialiased;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 100% 80% at 50% -30%, rgba(168, 85, 247, 0.18), transparent),
+      radial-gradient(ellipse 60% 50% at 100% 50%, rgba(126, 34, 206, 0.08), transparent);
+  }
+
+  #root {
+    @apply min-h-full w-full;
   }
 }
 
 @layer components {
   .form-label {
-    @apply mb-1.5 block text-sm font-medium text-slate-700;
+    @apply mb-1.5 block text-sm font-medium text-white/70;
   }
 
   .form-input {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20;
+    @apply w-full rounded-lg border border-white/10 bg-surface-elevated px-3 py-2 text-sm text-white shadow-sm transition placeholder:text-white/40 focus:border-accent/50 focus:outline-none focus:ring-1 focus:ring-accent/30;
   }
 
   .form-error {
-    @apply mt-1 text-sm text-red-600;
+    @apply mt-1 text-sm text-red-400;
   }
 }

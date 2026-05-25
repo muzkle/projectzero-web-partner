@@ -1,7 +1,9 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+ARG NODE_AUTH_TOKEN
+ENV NODE_AUTH_TOKEN=$NODE_AUTH_TOKEN
+COPY .npmrc package.json ./
+RUN npm install --legacy-peer-deps
 COPY . .
 ARG VITE_API_URL=http://localhost:3000/v1
 ENV VITE_API_URL=$VITE_API_URL
